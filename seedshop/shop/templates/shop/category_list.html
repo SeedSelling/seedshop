@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h1>Seed Categories</h1>
+<ul>
+    {% for cat in categories %}
+    <li>
+        <a href="{% url 'seed_by_category' cat %}">{{ cat }}</a>
+    </li>
+    {% empty %}
+    <li>No categories found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

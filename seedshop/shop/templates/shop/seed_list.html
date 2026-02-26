@@ -1,0 +1,21 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h1>Available Seeds</h1>
+<table class="simple-table">
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price/kg</th>
+        <th>Stock</th>
+    </tr>
+    {% for seed in seeds %}
+    <tr>
+        <td>{{ seed.name }}</td>
+        <td>{{ seed.category }}</td>
+        <td>₹{{ seed.price }}</td>
+        <td>{{ seed.stock }} kg</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

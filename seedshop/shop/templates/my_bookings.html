@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f9f1; /* halka green background */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2e7d32; /* green */
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 6px 10px;
+            width: 220px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            background: #2e7d32;
+            color: #fff;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background: #1b5e20;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        th {
+            background: #e8f5e9;
+            color: #1b5e20;
+        }
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+        .no-data {
+            margin-top: 15px;
+            text-align: center;
+            color: #b71c1c;
+            font-weight: bold;
+        }
+        .info {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+                .print-area {
+            /* same container look */
+            max-width: 900px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Print-only CSS */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: #ffffff;
+                margin: 0;
+                padding: 0;
+            }
+
+            .print-area {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<body>
+<div class="container print-area">
+    <h1>My Bookings</h1>
+    ...
+    <p class="subtitle">
+        Apna Aadhar Card Number daalein aur apni beej booking ki detail dekhein.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <label>Aadhar Number:</label>
+        <input type="text" name="aadhar" placeholder="आधार कार्ड नंबर दर्ज करें (12 digits)">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if bookings %}
+
+        <div style="text-align:right; margin-bottom:8px;" class="no-print">
+        <button onclick="window.print()"
+                style="background:#4caf50;color:#fff;border:none;padding:6px 14px;
+                       border-radius:4px;cursor:pointer;">
+            Print
+        </button>
+    </div>
+
+
+    <h3>Bookings for {{ phone }}</h3>
+
+    <table>
+        <tr>
+            <th>Seed</th>
+            <th>Quantity (Kg)</th>
+            <th>Status</th>
+            <th>Booking Date</th>
+        </tr>
+        {% for b in bookings %}
+        <tr>
+            <td>{{ b.seed.name }}</td>
+            <td>{{ b.quantity }}</td>
+            <td>
+                {% if b.status == "Pending" %}
+                    <span style="color:#ef6c00; font-weight:bold;">Pending</span>
+                {% elif b.status == "Confirmed" %}
+                    <span style="color:#2e7d32; font-weight:bold;">Confirmed</span>
+                {% elif b.status == "Delivered" %}
+                    <span style="color:#1565c0; font-weight:bold;">Delivered</span>
+                {% elif b.status == "Cancelled" %}
+                    <span style="color:#c62828; font-weight:bold;">Cancelled</span>
+                {% else %}
+                    {{ b.status }}
+                {% endif %}
+            </td>
+            <td>{{ b.booking_date|date:"d-m-Y" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% elif phone %}
+    <p class="no-data">Is mobile number ke liye koi booking nahi mili.</p>
+{% endif %}
+
+
+    <p class="info">
+        Note: Agar booking status "Pending" ho to kripya dukaan par sampark karein.
+    </p>
+</div>
+</body>
+</html>

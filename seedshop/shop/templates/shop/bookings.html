@@ -1,0 +1,51 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1>📋 My Bookings</h1>
+    
+    <!-- Aadhar Search -->
+    <form method="get" style="margin-bottom:20px;">
+        <input type="text" name="aadhar" placeholder="🔍 Search by Aadhar No (12 digits)" style="width:300px;padding:10px;border-radius:5px;border:1px solid #ddd;">
+        <button type="submit" style="background:#2e7d32;color:white;padding:10px 20px;border:none;border-radius:5px;">Search</button>
+    </form>
+    
+    <!-- Excel Export Button -->
+    <a href="/export-bookings/" style="background:orange;color:white;padding:10px 20px;text-decoration:none;border-radius:8px;font-weight:bold;">📊 Download Excel Report</a>
+    
+    <!-- Bookings Table -->
+    <table class="simple-table" style="margin-top:20px;">
+        <thead>
+            <tr>
+                <th>Farmer Name</th>
+                <th>Seed Variety</th>
+                <th>Aadhar No</th>
+                <th>Quantity</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ram Singh</td>
+                <td>Kashi Adarsh Tomato</td>
+                <td>1234-5678-9012</td>
+                <td>50 kg</td>
+                <td><span style="color:green;">✅ Delivered</span></td>
+            </tr>
+            <tr>
+                <td>Sita Devi</td>
+                <td>Wheat HD-2967</td>
+                <td>9876-5432-1098</td>
+                <td>100 kg</td>
+                <td><span style="color:blue;">✅ Accepted</span></td>
+            </tr>
+            <tr>
+                <td>Mohan Lal</td>
+                <td>Maize Pioneer</td>
+                <td>4567-8901-2345</td>
+                <td>25 kg</td>
+                <td><span style="color:orange;">⏳ Pending</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

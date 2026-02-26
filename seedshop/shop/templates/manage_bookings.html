@@ -1,0 +1,92 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 30px auto; background:#ffffff; padding:20px 25px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.12);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;"> 
+        <span></span>
+        <a href="{% url 'home' %}"
+           style="background:#38e741; color:white; padding:6px 12px; border-radius:4px;
+                  text-decoration:none; font-size:13px;">
+            Back to Dashboard
+        </a>
+    </div>
+
+    <h2 style="text-align:center; margin-bottom:20px; color:#0adb15;">
+        Manage Bookings (Status Update)
+    </h2>
+
+    {% if bookings %}
+    <table style="width:100%; border-collapse:collapse; font-size:14px;">
+        <thead>
+            <tr style="background:#2e7d32; color:white;">
+                <th style="padding:8px; text-align:left;">ID</th>
+                <th style="padding:8px; text-align:left;">Farmer Name</th>
+                <th style="padding:8px; text-align:left;">Seed</th>
+                <th style="padding:8px; text-align:left;">Category</th>
+                <th style="padding:8px; text-align:center;">Quantity</th>
+                <th style="padding:8px; text-align:center;">Current Status</th>
+                <th style="padding:8px; text-align:center;">Change Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr style="border-bottom:1px solid #ddd; {% if forloop.counter|divisibleby:2 %}background:#f9f9f9;{% endif %}">
+                <td style="padding:8px;">{{ booking.id }}</td>
+                <td style="padding:8px;">{{ booking.farmer_name }}</td>
+                <td style="padding:8px;">{{ booking.seed.name }}</td>
+                <td style="padding:8px;">{{ booking.seed.category }}</td>
+                <td style="padding:8px; text-align:center;">{{ booking.quantity }}</td>
+
+                <!-- Colourful current status (My Bookings style) -->
+                <td style="padding:8px; text-align:center;">
+                    {% if booking.status == "Pending" %}
+                        <span style="color:#ef6c00; font-weight:bold;">Pending</span>
+                    {% elif booking.status == "Confirmed" %}
+                        <span style="color:#1cebc8; font-weight:bold;">Confirmed</span>
+                    {% elif booking.status == "Delivered" %}
+                        <span style="color:#1565c0; font-weight:bold;">Delivered</span>
+                    {% elif booking.status == "Cancelled" %}
+                        <span style="color:#c62828; font-weight:bold;">Cancelled</span>
+                    {% else %}
+                        {{ booking.status }}
+                    {% endif %}
+                </td>
+                
+                
+                <td style="padding:8px; text-align:center;">
+                    <form method="post" style="display:inline-flex; gap:6px; align-items:center;">
+                        {% csrf_token %}
+                        <input type="hidden" name="booking_id" value="{{ booking.id }}">
+                        <select name="status" style="padding:4px 6px; font-size:13px;">
+                            <option value="Pending"   {% if booking.status == 'Pending' %}selected{% endif %}>Pending</option>
+                            <option value="Confirmed" {% if booking.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                            <option value="Delivered" {% if booking.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                            <option value="Cancelled" {% if booking.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        </select>
+
+                        <button type="submit"
+                                style="background:#2e7d32; color:white; border:none; padding:5px 10px;
+                                       font-size:13px; border-radius:4px; cursor:pointer;">
+                            Update
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+            </table>
+
+    <p style="margin-top:10px; font-size:12px; color:#666;">
+        Tip: Use the “Print / Download” button to save this booking list as PDF.
+    </p>
+
+
+    <p style="margin-top:12px; font-size:12px; color:#666; text-align:right;">
+        Use this page to update farmers’ booking status.
+    </p>
+    {% else %}
+        <p style="text-align:center; color:#777;">No bookings available yet.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

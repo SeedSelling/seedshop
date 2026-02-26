@@ -1,0 +1,21 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h1>{{ category|title }} varieties</h1>
+<table class="simple-table">
+    <tr>
+        <th>Name</th>
+        <th>Price/kg</th>
+        <th>Stock</th>
+    </tr>
+    {% for seed in seeds %}
+    <tr>
+        <td>{{ seed.name }}</td>        <!-- NO LINK -->
+        <td>₹{{ seed.price }}</td>
+        <td>{{ seed.stock }} kg</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No varieties available.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

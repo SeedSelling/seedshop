@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h1>🌾 Seed Booking System</h1>
+<p>Welcome to Online Seed Booking! Search Tomato varieties and buy directly.</p>
+
+<div style="margin-top: 20px;">
+    <a href="{% url 'shop:category_list' %}" style="background:#28a745;color:white;padding:15px 25px;text-decoration:none;border-radius:8px;font-weight:bold;margin-right:10px;">Browse Seeds</a>
+    <a href="{% url 'shop:seed_search' %}" style="background:#17a2b8;color:white;padding:15px 25px;text-decoration:none;border-radius:8px;font-weight:bold;">🔍 Search Seeds</a>
+    <a href="{% url 'shop:create_booking' %}" style="background:#6f42c1;color:white;padding:15px 25px;text-decoration:none;border-radius:8px;font-weight:bold;">Book Seeds</a>
+</div>
+{% endblock %}

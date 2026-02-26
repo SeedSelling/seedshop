@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>🔍 Seed Search Results</h1>
+    
+    <form method="get" class="mb-4" style="margin-bottom:20px;">
+    <input type="text" name="q" value="{{ query }}" placeholder="Enter seed name..." style="width: 300px; padding:10px; border-radius:5px; border:1px solid #ddd; display:inline;">
+    
+    <select name="category" style="width: 200px; padding:10px; border-radius:5px; border:1px solid #ddd; display:inline; margin-left:10px;">
+        <option value="">All Categories</option>
+        <option value="Tomato">🍅 Tomato</option>
+        <option value="Wheat">🌾 Wheat</option>
+        <option value="Rice">📈 Rice</option>
+        <option value="Maize">🌽 Maize</option>
+    </select>
+    
+    <button type="submit" style="background:#2e7d32;color:white;padding:10px 20px;border:none;border-radius:5px;font-weight:bold;margin-left:10px;">Search</button>
+</form>
+
+    <table class="simple-table">
+        <thead>
+            <tr>
+                <th>Seed Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for seed in seeds %}
+            <tr>
+                <td>{{ seed.name }}</td>
+                <td>₹{{ seed.price }}/kg</td>
+                <td>{{ seed.stock }} kg</td>
+                <td><a href="/pay/{{ seed.id }}/" style="background:green;color:white;padding:10px 15px;border:none;border-radius:5px;text-decoration:none;font-weight:bold;">Buy Now</a></td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4" style="text-align:center;color:#666;padding:20px;">No seeds found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

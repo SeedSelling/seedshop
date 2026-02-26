@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div style="border: 3px solid green; padding: 40px; text-align: center; max-width: 500px; margin: 50px auto; border-radius: 10px; background: #f0fff0;">
+    <h2 style="color: green;">✅ Payment Successful!</h2>
+    <h3>{{ seed.name }}</h3>
+    <p><strong>Amount:</strong> ₹{{ seed.price }}/kg</p>
+    <p><strong>Status:</strong> <span style="color: green; font-size: 20px;">Order Confirmed ✅</span></p>
+    <br>
+    <a href="{% url 'shop:home' %}" style="background:#28a745;color:white;padding:15px 30px;text-decoration:none;border-radius:8px;font-weight:bold;font-size:16px;">← Continue Shopping</a>
+</div>
+{% endblock %}
